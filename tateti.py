@@ -59,30 +59,28 @@ class TaTeTiProblem(SearchProblem):
 
 def end_game(board):
     row_one,row_two,row_three = board
-    total = 0
+    plays = list(set(row_one + row_two + row_three))
+    if 0 not in plays:
+        return (True,'tied')
     for row in (row_one,row_two,row_three):
-        total += abs(sum(row))
         if abs(sum(row)) == 3:
             return True, 'IA' if sum(row) > 0 else 'Player'
         
     for i in range(3):
         sum_col = row_one[i] + row_two[i] + row_three[i]
-        total += abs(row_one[i]) + abs(row_two[i]) + abs(row_three[i])
         if abs(sum_col) == 3:
             return True, 'IA' if sum_col > 0 else 'Player'
 
     main_diagonal = row_one[0] + row_two[1] + row_three[2]
     secondary_diagonal = row_one[2] + row_two[1] + row_three[0]
     
-    total += abs(row_one[0]) + abs(row_two[1]) + abs(row_three[2]) + abs(row_one[2]) + abs(row_two[1]) + abs(row_three[0])
-
     if abs(main_diagonal) == 3:
         return True, 'IA' if main_diagonal > 0 else 'Player'
 
     if abs(secondary_diagonal) == 3:
         return True, 'IA' if secondary_diagonal > 0 else 'Player'
     
-    return (False, '') if total != 24 else (True,'tied')
+    return False, ''
 
 def draw_board(board):
     for row in board:
