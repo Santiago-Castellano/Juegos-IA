@@ -36,26 +36,30 @@ class TaTeTiProblem(SearchProblem):
         if pos[0] == 2:
             row_three[pos[1]] = 1
 
-        for value in range(-3,3):
-            if sum(row_one) == value or sum(row_two) == value or sum(row_three) == value:
-                return value
+        result = 0
+        main_diagonal = row_one[0] + row_two[1] + row_three[2]
+        secondary_diagonal = row_one[2] + row_two[1] + row_three[0]
+        
+        for value in (-3,-2,2,3):
+            if sum(row_one) == value:
+                result += 1 if value > 0 else -1
+            if sum(row_two) == value:
+                result += 1 if value > 0 else -1
+            if sum(row_three) == value:
+                result += 1 if value > 0 else -1
             
             for i in range(3):
                 sum_col = row_one[i] + row_two[i] + row_three[i]
                 if sum_col == value:
-                    return value
-
-            main_diagonal = row_one[0] + row_two[1] + row_three[2]
-            secondary_diagonal = row_one[2] + row_two[1] + row_three[0]
-            
+                    result += 1 if value > 0 else -1
+        
             if main_diagonal == value:
-                return value
+                result += 1 if value > 0 else -1
 
             if secondary_diagonal == value:
-                return value
-
-    def generate_random_state(self):
-        pass
+                result += 1 if value > 0 else -1
+        
+        return result
 
 def end_game(board):
     row_one,row_two,row_three = board
@@ -137,6 +141,7 @@ if __name__ == '__main__':
             problem = TaTeTiProblem(state)
             result = hill_climbing(problem)
             next_play_IA, board = result.state
+            print("value state: "+ str(result.value))
             board[next_play_IA[0]][next_play_IA[1]] = 1
             
         finish,win = end_game(board)
@@ -144,5 +149,11 @@ if __name__ == '__main__':
             draw_board(board)
         play_player = not play_player
     print("")
-    print("El ganador es: "+ win)
+    if win == 'Player':
+        print("You WIN!!!! Congratulations")
+    elif win == "IA":
+        print("You LOST!!!! Try again...")
+    else:
+        print('TIED, try again...')
+
     draw_board(board)
