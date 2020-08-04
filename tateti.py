@@ -62,6 +62,16 @@ def end_game(board):
     plays = list(set(row_one + row_two + row_three))
     if 0 not in plays:
         return (True,'tied')
+    
+    main_diagonal = row_one[0] + row_two[1] + row_three[2]
+    secondary_diagonal = row_one[2] + row_two[1] + row_three[0]
+    
+    if abs(main_diagonal) == 3:
+        return True, 'IA' if main_diagonal > 0 else 'Player'
+
+    if abs(secondary_diagonal) == 3:
+        return True, 'IA' if secondary_diagonal > 0 else 'Player'
+    
     for row in (row_one,row_two,row_three):
         if abs(sum(row)) == 3:
             return True, 'IA' if sum(row) > 0 else 'Player'
@@ -71,14 +81,6 @@ def end_game(board):
         if abs(sum_col) == 3:
             return True, 'IA' if sum_col > 0 else 'Player'
 
-    main_diagonal = row_one[0] + row_two[1] + row_three[2]
-    secondary_diagonal = row_one[2] + row_two[1] + row_three[0]
-    
-    if abs(main_diagonal) == 3:
-        return True, 'IA' if main_diagonal > 0 else 'Player'
-
-    if abs(secondary_diagonal) == 3:
-        return True, 'IA' if secondary_diagonal > 0 else 'Player'
     
     return False, ''
 
@@ -123,12 +125,13 @@ if __name__ == '__main__':
     state = INITIAL
     board= None
     print("You play whit O")
+    play_player = True
     while not finish:
-        row,col = input_player()
-        _,board = state
-        board[row][col] = -1
-        finish,win = end_game(board)
-        if not finish:
+        if play_player:
+            row,col = input_player()
+            _,board = state
+            board[row][col] = -1
+        else:
             input_IA = input_random_IA(board)
             state = (input_IA),board
             problem = TaTeTiProblem(state)
@@ -136,12 +139,10 @@ if __name__ == '__main__':
             next_play_IA, board = result.state
             board[next_play_IA[0]][next_play_IA[1]] = 1
             
+        finish,win = end_game(board)
+        if not play_player:
             draw_board(board)
-            finish,win = end_game(board)
+        play_player = not play_player
+    print("")
     print("El ganador es: "+ win)
     draw_board(board)
-
-    #print("### ESTADO DEL JUEGO###")
-    #print("Proxima jugada de la IA: fila: "+str(prox_jugada[0])+" col: " +str(prox_jugada[1]))
-    #draw_board(tablero)
-
