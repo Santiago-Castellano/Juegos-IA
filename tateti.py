@@ -40,7 +40,7 @@ class TaTeTiProblem(SearchProblem):
         main_diagonal = row_one[0] + row_two[1] + row_three[2]
         secondary_diagonal = row_one[2] + row_two[1] + row_three[0]
         
-        for value in (-3,-2,2,3):
+        for value in (-2,2,3):
             if sum(row_one) == value:
                 result += 1 if value > 0 else -1
             if sum(row_two) == value:
