@@ -27,7 +27,7 @@ class TaTeTiProblem(SearchProblem):
         board = [[0] * 3] * 3
         for row_index, row in enumerate(board_state):
             board[row_index] = list(row).copy()
-            
+
         board[x][y] = 1
         plays = []
         #add row
@@ -129,9 +129,9 @@ if __name__ == '__main__':
         os.system('clear')
         finish = False
         state = (0,0),([0,0,0],[0,0,0],[0,0,0])
-        board= None
+        board= [0,0,0],[0,0,0],[0,0,0]
         print("You play whit O")
-        play_player = True
+        play_player = random.randint(0,10) > 5
         while not finish:
             if play_player:
                 row,col = input_player()
