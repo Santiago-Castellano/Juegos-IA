@@ -1,17 +1,16 @@
 import random
-from simpleai.search import SearchProblem, hill_climbing, hill_climbing_random_restarts
+from simpleai.search import SearchProblem, hill_climbing
 import os
 
 
 class TaTeTiProblem(SearchProblem):
     def actions(self, state):
         available_actions = []
-        pos,board = state
+        _,board = state
         for row_index,row in enumerate(board):
             for  col_index,col in enumerate(row):
                 if col == 0:
-                    if row_index != pos[0] and col_index != pos[1]:
-                        available_actions.append((row_index,col_index))
+                    available_actions.append((row_index,col_index))
         
         return available_actions
 
@@ -24,79 +23,35 @@ class TaTeTiProblem(SearchProblem):
 
     def value(self, state):
         result = 0
-        pos,board = list(state)
-        row_one,row_two,row_three = list(board)
-        sum_row = 0
-        row = []
-        if pos[0] == 0:
-            row = row_one.copy()
-        elif pos[0] == 1:
-            row = row_two.copy()
-        else:
-            row = row_three.copy()
-
-        row[pos[1]] = 1
-        main_diagonal = []
-        secondary_diagonal = []
-
-        sum_main_diagonal = 0
-        sum_secondary_diagonal = 0
-
-        if pos[0] == pos[1]:
-            if pos[0] == 0:
-                main_diagonal = 1,row_two[1],row_three[2]
-            elif pos[0] == 1:
-                main_diagonal = row_one[0],1,row_three[2]
-            else:
-                main_diagonal = row_one[0],row_two[1],1
-
-
-        if (pos[0] == 2 and pos[1] == 0) or (pos[0] == 0 and pos[1] == 2) or ((pos[0] == 1 and pos[1] == 1)):
-            if pos[0] == 0:
-                secondary_diagonal = 1,row_two[1],row_three[1]
-            elif pos[0] == 1:
-                secondary_diagonal = row_one[2],1,row_three[1]
-            else:
-                secondary_diagonal = row_one[2],row_two[1],1
-        
-        sum_secondary_diagonal = sum(secondary_diagonal)
-        sum_main_diagonal = sum(main_diagonal)
-       
-        sum_row = sum(row)
-        sum_col = row_one[pos[1]] + row_two[pos[1]] + row_three[pos[1]]
-        
-        """
-            SUMAR UNICAMENTE LOS SCTORES DE L APOS DONDE ESTA JUGANDO Y NO TODOS LAS POSIBILIDADES
-        """
-        #EVITAR QUE ME GANE
-        if sum_row == -1:
-            result +=  3 if 0 not in (row) else 0
+        (x,y),board_state = list(state)
+        board = [[0] * 3] * 3
+        for row_index, row in enumerate(board_state):
+            board[row_index] = list(row).copy()
             
-        if sum_col == -1:
-            result += 3 if 0 not in (row_one[pos[1]],row_two[pos[1]],row_three[pos[1]]) else 0
-    
-        if sum_main_diagonal == -1:
-            result += 3 if 0 not in (main_diagonal) else 0
+        board[x][y] = 1
+        plays = []
+        #add row
+        plays.append((sum(board[x].copy()),board[x].copy()))
+        #add col
+        col = [board[0][y],board[1][y],board[2][y]]
+        plays.append((sum(col),col))
 
-        if sum_secondary_diagonal == -1:
-            result += 3 if 0 not in (secondary_diagonal) else 0
+        if x == y:
+            main_diagonal = board[0][0],board[1][1],board[2][2]
+            plays.append((sum(main_diagonal),main_diagonal))
 
-        #INTENTAR GANAR
-        for value in (2,3):
-            if sum_row == value:
-                result +=  value
-                
-            if sum_col == value:
-                result += value
+        if (x == 2 and y == 0) or (x == 0 and y == 2) or ((x == 1 and y == 1)):
+            secondary_diagonal = board[0][2],board[1][1],board[2][0]
+            plays.append((sum(secondary_diagonal),secondary_diagonal))
         
-            if sum_main_diagonal == value:
-                result += value
+        for sum_play, play in plays:
+            if sum_play == -1:
+                result +=  3 if 0 not in (play) else 0
+            else:
+                for value in (2,3):
+                    if sum_play == value:
+                        result +=  value
 
-            if sum_secondary_diagonal == value:
-                result += value
-        #GANAR
-
-            
         return result
 
 def end_game(board):
