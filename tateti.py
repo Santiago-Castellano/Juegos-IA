@@ -45,12 +45,10 @@ class TaTeTiProblem(SearchProblem):
             plays.append((sum(secondary_diagonal),secondary_diagonal))
         
         for sum_play, play in plays:
-            if sum_play == -1:
-                result +=  3 if 0 not in (play) else 0
+            if sum_play == -1 or sum_play == 3:
+                result +=  6 + sum_play
             else:
-                for value in (2,3):
-                    if sum_play == value:
-                        result +=  value
+                result += sum_play
 
         return result
 
@@ -67,9 +65,9 @@ def play_IA(board):
     state = (input_IA),board
     problem = TaTeTiProblem(state)
     result = hill_climbing(problem)
-    next_play_IA, board = result.state
+    next_play_IA, _ = result.state
     
-    return next_play_IA,board
+    return next_play_IA
 
 if __name__ == '__main__':
     pass

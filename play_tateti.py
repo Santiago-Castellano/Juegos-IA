@@ -77,23 +77,19 @@ if __name__ == '__main__':
     while play:
         os.system('clear')
         finish = False
-        state = (0,0),([0,0,0],[0,0,0],[0,0,0])
         board= [0,0,0],[0,0,0],[0,0,0]
         print("You play whit O")
         play_player = random.randint(0,10) > 5
         while not finish:
             if play_player:
                 row,col = input_player(board)
-                _,board = state
                 board[row][col] = -1
-                os.system('clear')
             else:
-                next_play_IA, board = play_IA(board)
+                next_play_IA = play_IA(board)
                 board[next_play_IA[0]][next_play_IA[1]] = 1
-                
+            os.system('clear')
             finish,win = end_game(board)
-            if not play_player:
-                draw_board(board)
+            draw_board(board)
             play_player = not play_player
         print("")
         if win == 'Player':
