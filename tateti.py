@@ -31,20 +31,20 @@ class TaTeTiProblem(SearchProblem):
         board[x][y] = 1
         plays = []
         #add row
-        plays.append((sum(board[x].copy()),board[x].copy()))
+        plays.append(sum(board[x]))
         #add col
         col = [board[0][y],board[1][y],board[2][y]]
-        plays.append((sum(col),col))
+        plays.append(sum(col))
 
         if x == y:
             main_diagonal = board[0][0],board[1][1],board[2][2]
-            plays.append((sum(main_diagonal),main_diagonal))
+            plays.append(sum(main_diagonal))
 
         if (x + y) == 2:
             secondary_diagonal = board[0][2],board[1][1],board[2][0]
-            plays.append((sum(secondary_diagonal),secondary_diagonal))
+            plays.append(sum(secondary_diagonal))
         
-        for sum_play, play in plays:
+        for sum_play in plays:
             if sum_play == -1 or sum_play == 3:
                 result +=  6 + sum_play
             else:
