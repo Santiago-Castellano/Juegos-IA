@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Common',
     'TaTeTi'
 ]
 
@@ -57,7 +58,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'TaTeTi/Templates'),
+            os.path.join(BASE_DIR,'Common/Templates'),
+            os.path.join(BASE_DIR,'TaTeTi/Templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
