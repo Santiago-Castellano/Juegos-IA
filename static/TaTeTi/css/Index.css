@@ -1,0 +1,11 @@
+.player {
+    background-color: green;
+}
+.ai {
+    background-color: red;
+}
+#board tbody tr{
+    height:100px;
+    background-color: cornsilk;
+
+}

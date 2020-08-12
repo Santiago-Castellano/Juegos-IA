@@ -1,15 +1,11 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <style>
-        .player {
-          background-color: green;
-        }
-        </style>
+    <link rel="stylesheet" href="{% static 'TaTeTi/css/Index.css' %}">
     <title>TaTeTi</title>
   </head>
   <body>
@@ -23,17 +19,17 @@
           </div>
           <table  id="board" class="table table-bordered">
             <tbody>
-              <tr  style="height:100px;" data-fila="1">
+              <tr data-fila="1">
                 <td data-columna="1"></td>
                 <td data-columna="2"></td>
                 <td data-columna="3"></td>
               </tr>
-              <tr style="height:100px;" data-fila="2">
+              <tr data-fila="2">
                 <td data-columna="1"></td>
                 <td data-columna="2"></td>
                 <td data-columna="3"></td>
               </tr>
-              <tr style="height:100px;" data-fila="3">
+              <tr data-fila="3">
                 <td data-columna="1"></td>
                 <td data-columna="2"></td>
                 <td data-columna="3"></td>
@@ -47,24 +43,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <script>
-        $("#board tbody tr td").click(function () {
-            $(this).addClass("player");
-            what_show(false);
-            setInterval(function () {
-                what_show(true)
-            },3000);
-        })
-        function what_show(board) {
-            if (board) {
-                $("#board").show();
-                $("#message").hide();
-            }else{
-                $("#board").hide();
-                $("#message").show();
-            }
-        }
-        $(what_show(true))
-    </script>  
+    <script src="{% static 'TaTeTi/js/Index.js' %}"></script>
+
 </body>
 </html>
