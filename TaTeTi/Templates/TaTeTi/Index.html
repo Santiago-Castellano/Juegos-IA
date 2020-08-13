@@ -11,29 +11,29 @@
   <body>
 <div class="container">
   <a href="{% url 'Common_index' %}">Go Back</a>
-  <a href="{% url 'TaTeTi_play_ai' %}">Play AI</a>
     <h1 class="my-4">Game TaTeTi</h1>
+    <button class="btn btn-primary" onclick=play_again()>Play Again</button>
     <div class="row h-200">
       <div id="game" class="col-lg-6 mb-4">
         <div  id="message">
             <h3 class="p-4"> waiting for the AI </h3>
           </div>
-          <table  id="board" class="table table-bordered">
+          <table id="board" class="table table-bordered">
             <tbody>
-              <tr data-fila="1">
-                <td data-columna="1"></td>
-                <td data-columna="2"></td>
-                <td data-columna="3"></td>
+              <tr data-row="0">
+                <td data-col="0"></td>
+                <td data-col="1"></td>
+                <td data-col="2"></td>
               </tr>
-              <tr data-fila="2">
-                <td data-columna="1"></td>
-                <td data-columna="2"></td>
-                <td data-columna="3"></td>
+              <tr data-row="1">
+                <td data-col="0"></td>
+                <td data-col="1"></td>
+                <td data-col="2"></td>
               </tr>
-              <tr data-fila="3">
-                <td data-columna="1"></td>
-                <td data-columna="2"></td>
-                <td data-columna="3"></td>
+              <tr data-row="2">
+                <td data-col="0"></td>
+                <td data-col="1"></td>
+                <td data-col="2"></td>
               </tr>
             </tbody>
           </table>
