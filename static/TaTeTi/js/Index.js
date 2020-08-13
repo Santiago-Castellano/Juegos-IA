@@ -1,11 +1,22 @@
+$(start())
+function start(){
+    let n =  Math.random();
+    if (n > 0.5){
+        play_ai()
+    }else{
+        what_show(true)
+    }
+}
 $("#board tbody tr td").click(function () {
     if ($(this).hasClass("player") ||$(this).hasClass("ai") ) {
         alert("the cell is locked");
         return 
     }
     $(this).addClass("player");
-    what_show(false);
-    play_ai();
+    if (!end_game()) {
+        what_show(false);
+        play_ai();
+    }
 })
 
 function what_show(board) {
@@ -17,10 +28,9 @@ function what_show(board) {
         $("#message").show();
     }
 }
-$(what_show(true))
 
 
-function play_ai(){
+function get_board(){
     let board = []
     $("#board tbody tr").each(function (){
         let row = [];
@@ -37,7 +47,11 @@ function play_ai(){
         })
         board.push(row);
     });
-    
+    return board
+}
+
+function play_ai(){
+    let board = get_board()
     $.ajax({
         type: "GET",
         url:"/tateti/play_ai/",
@@ -62,6 +76,8 @@ function play_ai(){
         },
         complete:function(){
             what_show(true);
+            end_game();
+            
         }
     });
 }
@@ -75,4 +91,19 @@ function play_again(){
             $(this).removeClass("ai")
         }
     });
+    start();
+}
+
+function end_game(){
+    $("#board tbody tr").each(function () {
+        if ($(this).find(".player").length == 3) {
+            alert("You WIN!!");
+            return true;
+        }
+        if ($(this).find(".ai").length == 3) {
+            alert("You LOST!!");
+            return true;
+        }
+    });
+    return false;
 }
