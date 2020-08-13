@@ -105,5 +105,36 @@ function end_game(){
             return true;
         }
     });
+    let board = get_board();
+    let main = board[0][0] + board[1][1] + board[2][2]; 
+    for (let col = 0; col < 3; col++) {
+        let sum_col = board[0][col] + board[1][col] + board[2][col];
+        if (sum_col == 3) {
+            alert("You LOST!!");
+            return true;
+        }
+        if (sum_col == -3) {
+            alert("You WIN!!");
+            return true;
+        }
+    }
+    if (main == 3) {
+        alert("You LOST!!");
+        return true;
+    }
+    if (main == -3) {
+        alert("You WIN!!");
+        return true;
+    }
+    let secondary = board[0][2] + board[1][1] + board[2][0]; 
+    if (secondary == 3) {
+        alert("You LOST!!");
+        return true;
+    }
+    if (secondary == -3) {
+        alert("You WIN!!");
+        return true;
+    }
+
     return false;
 }
