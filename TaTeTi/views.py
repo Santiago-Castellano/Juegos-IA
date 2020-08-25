@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import  JsonResponse
-from IA.tateti import  play_IA
+from IA.TaTeTi.tateti import  play_IA
 
 
 # Create your views here.
