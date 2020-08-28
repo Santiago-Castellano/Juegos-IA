@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import  JsonResponse
-from IA.TaTeTi.tateti import  play_IA
+from IA.TaTeTi.q_learning import  play_IA
 
 
 # Create your views here.
@@ -22,6 +22,7 @@ def play_ai(request):
                 }
             )
         row,col = play_IA(board)
+        print(row,col)
         return JsonResponse(
             {
                 "row":row,
